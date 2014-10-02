@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+		<head>
+				<meta charset="utf-8">
+				<title>Gifshot Demo</title>
+				<!--
+				<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				-->
+
+				<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+				<link rel="icon" href="/favicon.ico" type="image/x-icon">
+
+				<!-- Third Party CSS Dependencies
+				<link rel="stylesheet" href="css/dependencies/bootstrap.css">
+				<link rel="stylesheet" href="css/dependencies/prism.css">
+				<link rel="stylesheet" href="css/dependencies/select.css">
+				-->
+				<link rel="stylesheet" href="picnic.css">
+				
+						<!-- Custom CSS styles 
+				<link rel="stylesheet" href="css/style.css">-->
+				<style>
+					.text-center { text-align: center; }
+					.hidden { display: none; }
+					option { color: black; }
+					.demo-section { margin: 10px; margin-top: 60px;}
+					html {overflow-y: scroll;}
+				</style>
+		</head>
+
+		<body>
+			<!-- fixed-title -->
+			<nav class="fixed-title text-center" role="navigation">
+				<span class="main">
+					<a href="index.html" role="banner"><img class="gifshot-header-logo" src="images/gifshot.svg" alt="gifshot logo"></a>
+					<span class="gifshot-header-text">Extension</span>
+				</span>
+				
+				<!-- responsive -->
+				<input id="bmenu" class="burgercheck" type="checkbox">
+				<label for="bmenu" class="burgermenu"></label>
+				<!-- /responsive -->
+		
+				<!-- main-header -->
+				<div class="menu">
+						<a href="index.html">HOME</a>
+						<a class="active" href="demo.html">DEMO</a>
+						<a href="https://github.com/yahoo/gifshot">CODE</a>
+						<a href="https://github.com/yahoo/gifshot#api-methods">DOCS</a>
+				</div>
+			</nav>
+			<!-- demo-section  -->
+			<div class="demo-section v-center">
+				<div>
+					<div class="row">
+						<div class="l-half options-section">
+							<h3>Options</h3>
+							<form class="options-form" action="">
+								<div class="row" >
+									<div class="m-half">
+										<h4>Source</h4>
+										<label class="select">
+											<select name="GIFSource" id="GIFSource" class="">
+												<option value="webcam">webcam</option>
+												<option value="video">video</option>
+												<option value="images">images</option>
+											</select>
+										</label>
+									</div>
+									<div class="m-half">
+										<h4>Type</h4>
+										<label class="select">
+											<select name="GIFType" id="GIFType" >
+												<option value="animated">Animated</option>
+												<option value="snapshot">Snap Shot</option>
+											</select>
+										</label>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Width (in pixels)</h4>
+										<div class="input-group">
+											<input name="gifWidth" id="gifWidth" class="form-control" value="200" size="5" type="number"></input>
+										</div>
+									</div>
+									<div class="m-half">
+										<h4>Height (in pixels)</h4>
+										<div class="input-group">
+											<input name="gifHeight" id="gifHeight" class="form-control" value="200" size="5" type="number"></input>
+										</div>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Interval</h4>
+										<div class="input-group">
+											<input name="interval" id="interval" class="form-control" value=".1" size="5" type="number"></input>
+											<div class="input-group-addon">secs</div>
+										</div>
+									</div>
+									<div class="m-half">
+										<h4>Number of Frames</h4>
+										<input name="numFrames" id="numFrames" class="form-control" value="10" size="5" type="number"></input>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Text</h4>
+										<input name="gifText" id="gifText" class="form-control" value="" size="30" placeholder="Add text here..."></input>
+									</div>
+									<div class="m-half">
+										<h4>Font Weight</h4>
+										<label class="custom-select">
+											<select name="fontWeight" id="fontWeight" class="form-control">
+												<option value="normal">normal</option>
+												<option value="bold">bold</option>
+											</select>
+										</label>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Font Size</h4>
+										<div class="input-group">
+											<input name="fontSize" id="fontSize" class="form-control" value="16" size="5" type="number"></input>
+											<div class="input-group-addon">px</div>
+										</div>
+									</div>
+									<div class="m-half">
+										<h4>Font Family</h4>
+										<label class="select">
+											<select name="fontFamily" id="fontFamily" class="form-control">
+												<option value="sans-serif">sans-serif</option>
+												<option value="Arial">Arial</option>
+												<option value="Calibri">Calibri</option>
+												<option value="Times New Roman">Times New Roman</option>
+											</select>
+										</label>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Font Color</h4>
+										<input type="color" name="fontColor" id="fontColor" class="form-control" value="#FFFFFF" size="5"></input>
+									</div>
+									<div class="m-half">
+										<h4>Text Align</h4>
+										<label class="select">
+											<select name="textAlign" id="textAlign" class="form-control">
+												<option value="center">center</option>
+												<option value="left">left</option>
+												<option value="right">right</option>
+											</select>
+										</label>
+									</div>
+								</div>
+								<div>
+									<div class="m-half">
+										<h4>Text Baseline</h4>
+										<label class="select">
+											<select name="textBaseline" id="textBaseline" class="form-control">
+												<option value="bottom">bottom</option>
+												<option value="center">center</option>
+												<option value="top">top</option>
+											</select>
+										</label>
+									</div>
+									<div class="m-half">
+										<h4>Sample Interval</h4>
+										<input name="sampleInterval" id="sampleInterval" class="form-control" value="10" size="5" type="number"></input>
+									</div>
+								</div>
+								<div class="m-half">
+									<h4>Num Workers</h4>
+									<input name="numWorkers" id="numWorkers" class="form-control" value="2" size="5" type="number"></input>
+								</div>
+							</form>
+						</div>
+						<!--
+						<div class="col-md-5 text-center code-section">
+							<section>
+								<h3>
+									Code
+								</h3>
+								<pre class="language-javascript">
+									<code class="gifshot-code"></code>
+								</pre>
+							</section>
+						</div>
+						-->
+						<div class="l-half text-center preview-section">
+							<span class="options-button-group">
+								<button type="button" id="create-gif" class="btn btn-large btn-primary create-gif-button">Create GIF</button>
+							</span>
+							<section class="gifshot-image-preview-section"></section>
+							<div class="placeholder-div hidden">
+								<span class="placeholder-div-dimensions"></span>
+							</div>
+							<progress max="1" value="0" class="gifshot-progress-bar hidden"></progress>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- footer  -->
+			<footer class="footer v-center">
+				<div class="container">
+					<p style="margin: 0; float: right; font-size: 10px;">
+						All code on this site is licensed under the
+						<a href="https://github.com/yahoo/gifshot/blob/master/LICENSE.txt">Yahoo MIT License</a> unless stated.
+					</p>
+					<h4>This was assembled by <a href="http://jamesjnadeau.com">James Nadeau</a></h4>
+					<h5>Gifshot Made by <a href="http://sports.yahoo.com">Yahoo Sports</a></h4>
+					
+				</div>
+			</footer>
+			<script src="js/dependencies/gifshot.min.js"></script>
+			<!-- 
+			<script src="js/dependencies/prism.min.js"></script>
+			-->
+			<script src="js/dependencies/esprima.min.js"></script>
+			<script src="js/dependencies/escodegen.min.js"></script>
+			<script src="js/dependencies/lodash.mobile.min.js"></script>
+			<script class="gifshot-code-template" type="text/template">
+				gifshot.<%- method %>({
+					<% _.forEach(selectedOptions, function(val, key) {
+						if(gifshot.defaultOptions[key] !== val) { %>
+							<%= key %>: <% if(_.isString(val)) { %>'<%= val %>' <% }
+							else if(_.isArray(val)) { %>
+								<%= JSON.stringify(val) %> <% }
+							else { %> <%= val %> <%} %>,
+						<% } %>
+					<% }); %>
+				}, function(obj) {
+					if(!obj.error) {
+						var image = obj.image,
+						animatedImage = document.createElement('img');
+						animatedImage.src = image;
+						document.body.appendChild(animatedImage);
+					}
+				});
+			</script>
+			<script src="js/demo.js"></script>
+		</body>
+</html>
