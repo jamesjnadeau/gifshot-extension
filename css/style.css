@@ -4,8 +4,9 @@ html {overflow-y: scroll;}
 .hidden { display: none; }
 option { color: black; }
 .demo-section { margin-top: 30px;}
+.options-section { min-width: 800px; }
 
-.content { box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,0.3); }
+.content { box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,0.3); min-height: 50px; padding-top: 1em; }
 
 .options-button-group { padding-top: 10px; }
 

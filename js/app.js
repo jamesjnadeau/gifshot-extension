@@ -1,3 +1,4 @@
+//chrome.storage.local.clear();
 (function(window, document) {
 	var createGIFButton = document.querySelector('#create-gif'),
 		gifSource = document.querySelector('#GIFSource'),
@@ -21,12 +22,28 @@
 		placeholderDivDimensions = document.querySelector('.placeholder-div-dimensions'),
 		gifshotCode = document.querySelector('.gifshot-code'),
 		gifshotCodeTemplate = document.querySelector('.gifshot-code-template'),
+		videoUploadForm = document.querySelector('#videoUploadForm'),
+		videoUrl = document.querySelector('#videoUrl'),
+		videoUpload = document.querySelector('#videoUpload'),
+		videoWebCam = document.querySelector('#videoWebCam'),
+		videoPreview = document.querySelector('#videoPreview'),
+		reset = document.querySelector('#reset'),
 		getSelectedOptions = function() {
+			
+			var video;
+			if(videoUpload.value != '') {
+				video = [videoUpload.value];
+				alert('Sorry, this does not work yet :(');
+				video = ['example.mp4', 'example.ogv'];
+			} else {
+				video = [videoUrl.value];
+			}
+			
 			return {
 				'gifWidth': +gifWidth.value,
 				'gifHeight': +gifHeight.value,
 				'images': gifSource.value === 'images' ? ['http://i.imgur.com/2OO33vX.jpg', 'http://i.imgur.com/qOwVaSN.png', 'http://i.imgur.com/Vo5mFZJ.gif'] : false,
-				'video': gifSource.value === 'video' ? ['example.mp4', 'example.ogv'] : false,
+				'video': gifSource.value === 'video' ? video : false,
 				'interval': +interval.value,
 				'numFrames': +numFrames.value,
 				'text': text.value,
@@ -41,55 +58,6 @@
 			}
 		},
 		passedOptions,
-		updateCodeBlock = function(obj) {
-		/*
-			obj = obj || {};
-			var targetElem = obj.targetElem,
-				selectedOptions = getSelectedOptions(),
-				options = (function() {
-					var obj = {};
-
-					_.each(selectedOptions, function(val, key) {
-						if(val) {
-							obj[key] = val;
-						}
-					});
-
-					return obj;
-				}()),
-				template = _.template(gifshotCodeTemplate.innerHTML, {
-					gifshot: window.gifshot,
-					selectedOptions: options,
-					method: gifType.value === 'snapshot' ? 'takeSnapShot' : 'createGIF'
-				}),
-				code = escodegen.generate(esprima.parse(template), {
-					format: {
-						safeConcatenation: true
-					}
-				});
-
-			gifshotCode.innerHTML = code;
-
-			Prism.highlightElement(gifshotCode);
-
-			if (targetElem && (targetElem.id === 'gifWidth' || targetElem.id === 'gifHeight')) {
-				if(selectedOptions.gifHeight && selectedOptions.gifWidth) {
-					gifshotImagePreview.innerHTML = '';
-					placeholderDiv.style.height = selectedOptions.gifHeight + 'px';
-					placeholderDiv.style.width = selectedOptions.gifWidth + 'px';
-					placeholderDivDimensions.innerHTML = selectedOptions.gifWidth + ' x ' + selectedOptions.gifHeight;
-					if(selectedOptions.gifWidth < 60 || selectedOptions.gifHeight < 20) {
-						placeholderDivDimensions.classList.add('hidden');
-					} else {
-						placeholderDivDimensions.classList.remove('hidden');
-					}
-					placeholderDiv.classList.remove('hidden');
-				} else {
-					placeholderDiv.classList.add('hidden');
-				}
-			}
-			*/
-		},
 		bindEvents = function() {
 			createGIFButton.addEventListener('click', function(e) {
 				passedOptions = _.merge(_.clone(getSelectedOptions()), {
@@ -103,6 +71,7 @@
 
 				var method = gifType.value === 'snapshot' ? 'takeSnapShot' : 'createGIF';
 				console.log(passedOptions);
+				
 				gifshot[method](passedOptions, function(obj) {
 					if (!obj.error) {
 						var image = obj.image,
@@ -124,8 +93,6 @@
 			}, false);
 
 			//Preview video
-			var video = document.querySelector("#videoElement");
-			 
 			navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia || navigator.oGetUserMedia;
 			 
 			if (navigator.getUserMedia) {       
@@ -133,11 +100,11 @@
 			}
 			 
 			function handleVideo(stream) {
-				video.src = window.URL.createObjectURL(stream);
+				videoWebCam.src = window.URL.createObjectURL(stream);
 				
 				var handler = gifSource.addEventListener('change', function(event) {
 					stream.stop();
-					video.style.display = 'none';
+					//videoWebCam.style.display = 'none';
 					window.removeEventListener('change', handler, false );
 				});
 			}
@@ -147,27 +114,28 @@
 				alert('error with video stream');
 			}
 			
-			document.addEventListener('change', function(e) {
-				//console.log(e);
-				if(e.target.id == 'GIFSource' && e.target.value == 'webcam')
-				{
-					console.log('showing video');
-					if (navigator.getUserMedia) {
-						video.style.display = 'inline-block';
-						navigator.getUserMedia({video: true}, handleVideo, videoError);
-					}
-				}
-				/*updateCodeBlock({
-					targetElem: e.target
-				});*/
-			});
-
-			document.addEventListener('keyup', function(e) {
-				updateCodeBlock({
-					targetElem: e.target
-				});
-			});
+			videoUploadForm.style.display = 'none';
 			
+			gifSource.addEventListener('change', function(e) {
+					videoWebCam.style.display = 'none';
+					videoUploadForm.style.display = 'none';
+					switch(e.target.value)
+					{
+						case 'webcam':
+							if (navigator.getUserMedia) {
+								videoWebCam.style.display = '';
+								navigator.getUserMedia({video: true}, handleVideo, videoError);
+							}
+							break;
+						case 'video':
+							videoUploadForm.style.display = '';
+							break;
+						case 'images':
+							
+							break;
+					}
+					console.log('showing video');
+			});
 			
 			//allow the image to be downloaded:
 			gifshotImagePreview.onclick = function() {
@@ -189,29 +157,65 @@
 						// This is the recommended method:
 						var blob = new Blob([arraybuffer], {type: 'application/octet-stream'});
 					} catch (e) {
-						// The BlobBuilder API has been deprecated in favour of Blob, but older
-						// browsers don't know about the Blob constructor
-						// IE10 also supports BlobBuilder, but since the `Blob` constructor
-						//  also works, there's no need to add `MSBlobBuilder`.
 						var bb = new (window.WebKitBlobBuilder || window.MozBlobBuilder);
 						bb.append(arraybuffer);
 						var blob = bb.getBlob('application/octet-stream'); // <-- Here's the Blob
 					}
-				
-					// Use the URL object to create a temporary URL
-					//var url = (window.webkitURL || window.URL).createObjectURL(blob);
-					//window.open(url); // <-- Download!
 					
 					saveAs(blob, 'gifshot.gif');
 				}
 			};
 			
+			//adjust camera width/height to mimic output
+			//videoWebCam.height = gifHeight.value;
+			gifHeight.onblur = function(e) {
+				if(gifSource.value == 'webcam' ) {
+					videoWebCam.height 
+						= videoPreview.height
+						= gifHeight.value;
+					
+				}
+			};
+			
+			//videoWebCam.width = gifWidth.value;
+			gifWidth.onblur = function(e) {
+				if(gifSource.value == 'webcam' ) {
+					videoWebCam.width
+						= videoPreview.width
+						= gifWidth.value;
+				}
+			};
+			setTimeout(function() {
+				var height = way.get('gitshot_form.gifHeight');
+				if(height == undefined) {
+					height = 200;
+				}
+				videoWebCam.height = height;
+				var width = way.get('gitshot_form.gifWidth');
+				if(width == undefined) {
+					width = 200;
+				}
+				videoWebCam.width = width;
+				
+			}, 1000);
+			
+			videoUrl.addEventListener('change', function() { 
+				videoPreview.src = videoUrl.value;
+			});
+			
+			videoUpload.addEventListener('change', function() { 
+				console.log(videoUpload.value);
+			});
+			
+			reset.onclick = function(event) {
+				way.clear();
+				way.setDefaults(true);
+				videoWebCam.height = 200;
+				videoWebCam.width = 200;
+				return false;
+			};
 		};
 		
 		bindEvents();
-		/*
-		updateCodeBlock({
-			targetElem: gifWidth
-		});
-		*/
+
 }(window, document));

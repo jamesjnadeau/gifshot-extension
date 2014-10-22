@@ -2,7 +2,7 @@
 <html lang="en">
 		<head>
 			<meta charset="utf-8">
-			<title>Gifshot Demo</title>
+			<title>Gifshot Extension</title>
 			
 			<link rel="stylesheet" href="css/picnic.css">
 			
@@ -28,35 +28,36 @@
 					<a href="https://github.com/jamesjnadeau/gifshot-extension" target="_blank" >CODE</a>
 				</div>
 			</nav>
-			<!-- demo-section  -->
+			<!-- form-section  -->
 			<div class="demo-section v-center">
 				<div>
 					<div class="row">
 						<div class="l-half options-section">
 							<h3 class="text-center" >Options</h3>
 							<div class="content" >
-								<form class="options-form" action="">
-									
+								<form class="options-form" way-data="gitshot_form" way-persistent="true">
 									<div class="row" >
-										<div class="m-third">
+										<div class="third">
 											<h4>Source</h4>
 											<label class="select">
 												<select name="GIFSource" id="GIFSource" class="">
 													<option value="webcam">webcam</option>
 													<option value="video">video</option>
+													<!-- hard to support in chrome extention currently 
 													<option value="images">images</option>
+													-->
 												</select>
 											</label>
 										</div>
-										<div class="m-third">
+										<div class="third">
 											<h4>Width (in pixels)</h4>
 											<div class="input-group">
-												<input name="gifWidth" id="gifWidth" class="form-control" value="200" size="5" type="number"></input>
+												<input name="gifWidth" id="gifWidth" class="form-control" way-default="200" size="5" type="number"></input>
 											</div>
 										</div>
-										<div class="m-third">
+										<div class="third">
 											<h4>Num Workers</h4>
-											<input name="numWorkers" id="numWorkers" class="form-control" value="2" size="5" type="number"></input>
+											<input name="numWorkers" id="numWorkers" class="form-control" way-default="2" size="5" type="number"></input>
 										</div>
 									</div>
 									
@@ -73,7 +74,7 @@
 										<div class="m-third">
 											<h4>Height (in pixels)</h4>
 											<div class="input-group">
-												<input name="gifHeight" id="gifHeight" class="form-control" value="200" size="5" type="number"></input>
+												<input name="gifHeight" id="gifHeight" class="form-control" way-default="200" size="5" type="number"></input>
 											</div>
 										</div>
 									</div>
@@ -84,16 +85,16 @@
 										<div class="m-third">
 											<h4>Interval (in seconds)</h4>
 											<div class="input-group">
-												<input name="interval" id="interval" class="form-control" value=".1" size="5" type="number"></input>
+												<input name="interval" id="interval" class="form-control" way-default=".1" size="5" type="number" step=".01"></input>
 											</div>
 										</div>
 										<div class="m-third">
 											<h4># of Frames</h4>
-											<input name="numFrames" id="numFrames" class="form-control" value="10" size="5" type="number"></input>
+											<input name="numFrames" id="numFrames" class="form-control" way-default="10" size="5" type="number"></input>
 										</div>
 										<div class="m-third">
 											<h4>Sample Interval</h4>
-											<input name="sampleInterval" id="sampleInterval" class="form-control" value="10" size="5" type="number"></input>
+											<input name="sampleInterval" id="sampleInterval" class="form-control" way-default="10" size="5" type="number"></input>
 										</div>
 									</div>
 									
@@ -161,31 +162,26 @@
 												</select>
 											</label>
 										</div>
-										
+										<div class="m-half">
+											<button id="reset" style="float:right;" class="dull" >Reset</button>
+										</div>
 									</div>
 									
 								</form>
 							</div>
 						</div>
-						<!--
-						<div class="col-md-5 text-center code-section">
-							<section>
-								<h3>
-									Code
-								</h3>
-								<pre class="language-javascript">
-									<code class="gifshot-code"></code>
-								</pre>
-							</section>
-						</div>
-						-->
 						<div class="l-half text-center preview-section">
 							<div class="options-button-group">
 								<button type="button" id="create-gif" class="btn btn-large btn-primary create-gif-button">Create GIF</button>
 							</div>
 							<div class="content" >
 								<div>
-									<video autoplay="true" id="videoElement"></video>
+									<video autoplay="true" id="videoWebCam"></video>
+								</div>
+								<div id="videoUploadForm" >
+									<div  ><input type="url" id="videoUrl" placeholder="URL: ex http://www.jamesjnadeau.com/files/purple_and_brown_bubble_gum.mp4" style="width: 50%" ></div>
+									<video autoplay="true" id="videoPreview"></video>
+									<div><input type="file" id="videoUpload" ></div>
 								</div>
 								<section class="gifshot-image-preview-section"></section>
 								<div class="placeholder-div hidden">
@@ -201,42 +197,24 @@
 			<!-- footer  -->
 			<footer class="footer v-center">
 				<div class="container">
-					<p style="margin: 0; float: right; font-size: 10px;">
-						All code on this site is licensed under the
-						<a href="https://github.com/yahoo/gifshot/blob/master/LICENSE.txt">Yahoo MIT License</a> unless stated.
-					</p>
-					<h4>This was assembled by <a href="http://jamesjnadeau.com">James Nadeau</a></h4>
-					<h5>Gifshot Made by <a href="http://sports.yahoo.com">Yahoo Sports</a></h4>
-					
+					<small>
+						<small>
+							<small>
+								<p>This was assembled by <a target="_blank" href="http://jamesjnadeau.com">James Nadeau</a></p>
+								<p><a target="_blank" href="https://github.com/yahoo/gifshot" >Gifshot</a> Made by <a target="_blank" href="http://sports.yahoo.com">Yahoo Sports</a></p>
+							</small>
+						</small>
+					</small>
 				</div>
 			</footer>
 			<script src="js/dependencies/gifshot.min.js"></script>
-			<!-- 
-			<script src="js/dependencies/prism.min.js"></script>
-			-->
+			<script src="js/dependencies/way.js"></script>
 			<script src="js/dependencies/FileSaver.min.js"></script>
 			<script src="js/dependencies/esprima.min.js"></script>
 			<script src="js/dependencies/escodegen.min.js"></script>
 			<script src="js/dependencies/lodash.mobile.min.js"></script>
-			<script class="gifshot-code-template" type="text/template">
-				gifshot.<%- method %>({
-					<% _.forEach(selectedOptions, function(val, key) {
-						if(gifshot.defaultOptions[key] !== val) { %>
-							<%= key %>: <% if(_.isString(val)) { %>'<%= val %>' <% }
-							else if(_.isArray(val)) { %>
-								<%= JSON.stringify(val) %> <% }
-							else { %> <%= val %> <%} %>,
-						<% } %>
-					<% }); %>
-				}, function(obj) {
-					if(!obj.error) {
-						var image = obj.image,
-						animatedImage = document.createElement('img');
-						animatedImage.src = image;
-						document.body.appendChild(animatedImage);
-					}
-				});
-			</script>
-			<script src="js/demo.js"></script>
+			<script src="js/app.js"></script>
+			
+			
 		</body>
 </html>
