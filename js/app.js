@@ -167,24 +167,28 @@
 			};
 			
 			//adjust camera width/height to mimic output
-			//videoWebCam.height = gifHeight.value;
-			gifHeight.onblur = function(e) {
+			gifHeight_watcher = function(value) {
+				console.log(value, gifSource.value);
 				if(gifSource.value == 'webcam' ) {
 					videoWebCam.height 
 						= videoPreview.height
-						= gifHeight.value;
+						= value;
 					
 				}
 			};
+			way.watch('gitshot_form.gifHeight', gifHeight_watcher);
 			
-			//videoWebCam.width = gifWidth.value;
-			gifWidth.onblur = function(e) {
+			gifWidth_watcher = function(value) {
+				console.log(value, gifSource.value);
 				if(gifSource.value == 'webcam' ) {
 					videoWebCam.width
 						= videoPreview.width
-						= gifWidth.value;
+						= value;
 				}
 			};
+			way.watch('gitshot_form.gifWidth', gifWidth_watcher);
+			
+			//hack to default this in on first load
 			setTimeout(function() {
 				var height = way.get('gitshot_form.gifHeight');
 				if(height == undefined) {

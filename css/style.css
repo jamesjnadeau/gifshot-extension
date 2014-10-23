@@ -4,8 +4,9 @@ html {overflow-y: scroll;}
 .hidden { display: none; }
 option { color: black; }
 .demo-section { margin-top: 30px;}
+/*
 .options-section { min-width: 800px; }
-
+*/
 .content { box-shadow: inset 0px 10px 10px -10px rgba(0,0,0,0.3); min-height: 50px; padding-top: 1em; }
 
 .options-button-group { padding-top: 10px; }
@@ -26,4 +27,22 @@ hr.from_left {
 	background-image:    -moz-linear-gradient(left, rgba(0,0,0,0.65), rgba(0,0,0,0.15), rgba(0,0,0,0)); 
 	background-image:     -ms-linear-gradient(left, rgba(0,0,0,0.65), rgba(0,0,0,0.15), rgba(0,0,0,0)); 
 	background-image:      -o-linear-gradient(left, rgba(0,0,0,0.65), rgba(0,0,0,0.15), rgba(0,0,0,0)); 
+}
+#videoWebCam, videoPreview {
+	transition:300ms linear;
+}
+
+@media only screen and (max-width: 1600px) {
+	input {
+		border-color: blue;
+		width: 50%;
+	}
+	
+	.third {
+		width: 25%;
+	}
+	.no-compromise {
+		min-width: 250px;
+	}
+	
 }

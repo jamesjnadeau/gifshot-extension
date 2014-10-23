@@ -14,7 +14,7 @@
 			<!-- fixed-title -->
 			<nav class="fixed-title text-center" role="navigation">
 				<span class="main">
-					<a href="index.html" role="banner"><img class="gifshot-header-logo" src="images/gifshot.svg" alt="gifshot logo"></a>
+					<a href="javascript:void(0)" role="banner"><img class="gifshot-header-logo" src="images/gifshot.svg" alt="gifshot logo"></a>
 					<span class="gifshot-header-text">Extension</span>
 				</span>
 				
@@ -37,10 +37,10 @@
 							<div class="content" >
 								<form class="options-form" way-data="gitshot_form" way-persistent="true">
 									<div class="row" >
-										<div class="third">
+										<div class="third no-compromise">
 											<h4>Source</h4>
 											<label class="select">
-												<select name="GIFSource" id="GIFSource" class="">
+												<select name="GIFSource" id="GIFSource" class="" way-omit="true" >
 													<option value="webcam">webcam</option>
 													<option value="video">video</option>
 													<!-- hard to support in chrome extention currently 
@@ -62,7 +62,7 @@
 									</div>
 									
 									<div class="row" >
-										<div class="m-third">
+										<div class="m-third no-compromise">
 											<h4>Type</h4>
 											<label class="select">
 												<select name="GIFType" id="GIFType" >
@@ -179,7 +179,7 @@
 									<video autoplay="true" id="videoWebCam"></video>
 								</div>
 								<div id="videoUploadForm" >
-									<div  ><input type="url" id="videoUrl" placeholder="URL: ex http://www.jamesjnadeau.com/files/purple_and_brown_bubble_gum.mp4" style="width: 50%" ></div>
+									<div  ><input type="url" id="videoUrl" placeholder="URL: ex http://goo.gl/jnNBcA" style="width: 50%" ></div>
 									<video autoplay="true" id="videoPreview"></video>
 									<div><input type="file" id="videoUpload" ></div>
 								</div>
