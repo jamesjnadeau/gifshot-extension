@@ -668,17 +668,21 @@
 		}
 
 		var attributes = {};
-		var attrs = [].slice.call(w.dom(element).get(0).attributes);
-		attrs.forEach(function(attr) {
-			var include = (prefix && startsWith(attr.name, prefix + "-")) ? true : false;
-			if (include) {
-				var name = (prefix) ? attr.name.slice(prefix.length + 1, attr.name.length) : attr.name;
-				var value = parseAttrValue(name, attr.value);
-				if (_w.contains(["transform", "filter"], name)) { value = value.split("|"); }
-				attributes[name] = value;
-			}
-		});
-
+		var temp = w.dom(element).get(0);
+		if(Object.keys(temp).length !== 0) {
+			var attrs = [].slice.call(temp.attributes);
+			attrs.forEach(function(attr) {
+				var include = (prefix && startsWith(attr.name, prefix + "-")) ? true : false;
+				if (include) {
+					var name = (prefix) ? attr.name.slice(prefix.length + 1, attr.name.length) : attr.name;
+					var value = parseAttrValue(name, attr.value);
+					if (_w.contains(["transform", "filter"], name)) { value = value.split("|"); }
+					attributes[name] = value;
+				}
+			});
+		} else {
+			console.log('Unable to find element ', element, temp);
+		}
 		return attributes;
 
 	}
@@ -816,12 +820,16 @@
 			var data;
 			chrome.storage.local.get(tagPrefix, function(items) {
 				try {
+					console.log(data);
 					data = JSON.parse(items[tagPrefix]);
 					for (var key in data) {
 						self.set(key, data[key]);
 					}
-					callback();
-				} catch(e) { console.log(e); }
+				} catch(e) { 
+					console.log('JSON.parse error', e); 
+					data = {};
+				}
+				callback();
 			});
 			
 		} catch(e) {
@@ -958,7 +966,8 @@
 	}
 
 	var escapeHTML = function(str) {
-		return str ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : str;
+		console.log(typeof(str) );
+		return str  && typeof(str) !== 'number' ? str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;") : str;
 	}
 
 	///////////////////////////////////////////////////

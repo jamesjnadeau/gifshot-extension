@@ -34,7 +34,6 @@ hr.from_left {
 
 @media only screen and (max-width: 1600px) {
 	input {
-		border-color: blue;
 		width: 50%;
 	}
 	

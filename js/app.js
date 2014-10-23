@@ -168,7 +168,6 @@
 			
 			//adjust camera width/height to mimic output
 			gifHeight_watcher = function(value) {
-				console.log(value, gifSource.value);
 				if(gifSource.value == 'webcam' ) {
 					videoWebCam.height 
 						= videoPreview.height
@@ -176,26 +175,26 @@
 					
 				}
 			};
-			way.watch('gitshot_form.gifHeight', gifHeight_watcher);
+			way.watch('gifshot_form.gifHeight', gifHeight_watcher);
 			
 			gifWidth_watcher = function(value) {
-				console.log(value, gifSource.value);
 				if(gifSource.value == 'webcam' ) {
 					videoWebCam.width
 						= videoPreview.width
 						= value;
 				}
 			};
-			way.watch('gitshot_form.gifWidth', gifWidth_watcher);
+			way.watch('gifshot_form.gifWidth', gifWidth_watcher);
 			
 			//hack to default this in on first load
 			setTimeout(function() {
-				var height = way.get('gitshot_form.gifHeight');
+				var height = way.get('gifshot_form.gifHeight');
+				console.log(way.get('gifshot_form.gifHeight'));
 				if(height == undefined) {
 					height = 200;
 				}
 				videoWebCam.height = height;
-				var width = way.get('gitshot_form.gifWidth');
+				var width = way.get('gifshot_form.gifWidth');
 				if(width == undefined) {
 					width = 200;
 				}
@@ -211,13 +210,29 @@
 				console.log(videoUpload.value);
 			});
 			
-			reset.onclick = function(event) {
-				way.clear();
+			var reset_all_the_things = function(event) {
+				//Nuclear options
+				chrome.storage.local.clear();
+				//way.clear();
+				
 				way.setDefaults(true);
 				videoWebCam.height = 200;
 				videoWebCam.width = 200;
 				return false;
 			};
+			
+			reset.onclick = reset_all_the_things
+			
+			chrome.storage.local.get('init', function(data) {
+				console.log('init', data);
+				if(data === undefined) {
+					chrome.storage.local.set({init:true});
+					way.setDefaults(true);
+					videoWebCam.height = 200;
+					videoWebCam.width = 200;
+				}
+			});
+			
 		};
 		
 		bindEvents();
