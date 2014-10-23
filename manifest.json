@@ -3,7 +3,7 @@
 
   "name": "Gifshot Extension",
   "description": "a chrome extension I created to make use of the gifshot library",
-  "version": "1.0",
+  "version": "1.1",
   "icons": { "16": "icon_16.png", "128": "icon_128.png" },
   "app": {
     "background": {
